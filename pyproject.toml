@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "manager-mode-buddy"
+version = "0.1.0"
+description = "Local-first CLI scouting companion for EA Sports FC 25 Manager Career Mode"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+# Natural-language search (`mmb ask`) only. Everything else -- import, search, filters --
+# works without this and never makes a network call.
+ai = [
+    "anthropic>=0.40",
+]
+# Same feature, Google AI Studio instead of Anthropic. Install whichever matches your key.
+ai-google = [
+    "google-genai>=1.0",
+]
+dev = [
+    "pytest>=8.0",
+    "anthropic>=0.40",
+    "google-genai>=1.0",
+]
+
+[project.scripts]
+mmb = "manager_mode_buddy.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
